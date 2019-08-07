@@ -9,12 +9,16 @@ import GameStreams from './components/GameStreams'
 
 
 function App() {
-    return (<div className="container"><Router>
-        <Header />
-        <Route exact path="/" component={Games} />
-        <Route path="/top-streams" component={Streams} />
-        <Route path="/game/:id" component={GameStreams} />
-        </Router></div>
+    return (<Router>
+      <Header />
+      <div className="container">
+        
+          <Route exact path="/" component={Games} />
+          <Route path="/top-streams" component={Streams} />
+          <Route path="/game/:id" component={GameStreams} />
+          
+          </div>
+          </Router>
     )
 }
 

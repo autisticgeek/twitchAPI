@@ -16,7 +16,7 @@ body {
 }
 
 .hover {
-    opacity: 0.7;
+    opacity: 0.75;
     transition: opacity 500ms ease;
 }
 
@@ -30,13 +30,6 @@ body {
 .rounded {
     border-radius: 15px;
 }
-
-
-
-.btn:not(:disabled):not(.disabled) {
-    cursor: pointer;
-}
-
 .btn-primary:hover {
     color: #fff;
     background-color: #0069d9;
@@ -74,4 +67,13 @@ body {
     line-height: 1.5;
     border-radius: .25rem;
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+nav {
+    display:flex;
+    justify-content: space-around;
+    padding: 1rem 0 1rem 0;
+    background-color: rgba(0,0,0,0.2)
+}
+nav a:active {
+    color:red;
 }
