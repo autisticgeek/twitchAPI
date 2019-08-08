@@ -7,14 +7,15 @@ import api from '../api'
 function Games() {
   const title = 'Most Popular Games';
   const [games, setGames] = useState([]);
-  const fetchData = async () => {
-    const result = await api.get('https://api.twitch.tv/helix/games/top');
-    setGames(result.data.data.map(game => {
-      game.box_art_url = game.box_art_url.replace('{width}', '200').replace('{height}', '200')
-      return game;
-    }));
-  }
+  
   useEffect(() => {
+    const fetchData = async () => {
+      const result = await api.get('https://api.twitch.tv/helix/games/top');
+      setGames(result.data.data.map(game => {
+        game.box_art_url = game.box_art_url.replace('{width}', '200').replace('{height}', '200')
+        return game;
+      }));
+    }
     document.title = title;
     fetchData();
   }, []);
