@@ -9,16 +9,16 @@ function Streams() {
     useEffect(() => {
         const fetchData = async () => {
             const result = await api.get(`https://api.twitch.tv/helix/streams?language=${language}`);
-            console.log(result.data.data[0])
             setStreams(result.data.data.map(stream => {
                 stream.box_art_url = stream.thumbnail_url.replace('{width}', '300').replace('{height}', '200')
                 return stream
             }));
 
         }
-        document.title = "Top Live Streams";
+        
         fetchData();
     }, [language]);
+    document.title = "Top Live Streams";
     return <div><div style={{textAlign:'center', marginBottom:'0.5rem'}}>
         <h1>Top Live Streams</h1><select id="language" value={language} onChange={(event) => {
           setLanguage(document.getElementById('language').value)

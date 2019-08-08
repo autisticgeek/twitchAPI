@@ -9,29 +9,26 @@ function GamesStreams({match, location}) {
   const [viewers, setViewers] = useState(0);
   const [language, setLanguage] = useState('')
 
+  const fetchData = async () => {
+    const result = await api.get(`https://api.twitch.tv/helix/streams?game_id=${location.id}&language=${language}`);
+    setStreamData(result.data.data.map(stream => {
+      stream.thumbnail_url = stream.thumbnail_url.replace('{width}', '300').replace('{height}', '200')
+      return stream;
+    }));
+    setViewers(result.data.data.reduce((acc, stream)=>{
+      return acc + stream.viewer_count
+    },0))
+  }
 
   useEffect(()=>{
-    const fetchData = async () => {
-      const result = await api.get(
-        `https://api.twitch.tv/helix/streams?game_id=${location.id}&language=${language}`
-      );
-      setStreamData(result.data.data.map(stream => {
-        stream.thumbnail_url = stream.thumbnail_url.replace('{width}', '300').replace('{height}', '200')
-        return stream
-    }));
-      setViewers(result.data.data.reduce((acc, stream)=>{
-        return acc + stream.viewer_count
-      },0))
-      
-    }
-    document.title = location.name;
     fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[language])
 
   
   
   
-  
+  document.title = location.name;
   return <div>
     <div style={{display :'flex', margin: '0, 98%', marginBottom:'0.5rem'}}>
       <img src={location.box_art_url} alt="location.name" />
@@ -52,7 +49,7 @@ function GamesStreams({match, location}) {
             {streamData.map((stream, i) => {
              return (
              <li style={{width: "300px", marginBottom: '1rem', display:'flex', flexDirection: 'column', justifyContent: 'space-between'}} key={stream.id}>
-               <img className="rounded" src={stream.thumbnail_url} />
+               <img className="rounded" src={stream.thumbnail_url} alt={stream.title} />
                <h4>{i+1}. {stream.title}</h4>
                <h5>User: {stream.user_name} &mdash; {stream.viewer_count} viewers</h5>
                <a className="btn btn-primary" href={`https://twitch.tv/${stream.user_name}`}><i className="fa fa-play"></i> View Stream</a>
